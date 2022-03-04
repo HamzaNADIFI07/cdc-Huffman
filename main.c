@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
   count_occurrences(file, counts);
   fclose(file);
 
-  huffman_tree *forest[ALPHABET_SIZE];
+  huffman_tree_p forest[ALPHABET_SIZE];
   for (i = 0; i < ALPHABET_SIZE; i++)
     forest[i] = NULL;
 
@@ -41,7 +41,7 @@ int main(int argc, char **argv) {
   printf("\n");
 
   /*
-  huffman_tree *huffman = build_huffman_tree(forest, nb_leaves);
+  huffman_tree_p huffman = build_huffman_tree(forest, nb_leaves);
   printf("\n");
   print_huffman_tree(huffman);
   */

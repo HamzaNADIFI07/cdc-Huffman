@@ -6,7 +6,7 @@
 
 int main(int argc, char **argv) {
   if (argc <= 3) {
-    fprintf(stderr, "Usage: %s [-c|-d] <input> <output>\n\n-c: compress\n-d: uncompress", argv[0]);
+    fprintf(stderr, "Usage: %s [-c|-d] <input> <output>\n\n-c: compress\n-d: uncompress\n", argv[0]);
     exit(1);
   }
 

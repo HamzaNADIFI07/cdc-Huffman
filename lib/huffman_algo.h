@@ -12,8 +12,8 @@
  * A structure used for the Huffman algorithm
  */
 typedef struct {
-  huffman_tree *node1;          /* `node1` and `node2` are two nodes with */
-  huffman_tree *node2;          /* the minimal number of occurrences */
+  huffman_tree_p node1;          /* `node1` and `node2` are two nodes with */
+  huffman_tree_p node2;          /* the minimal number of occurrences */
   int nb_leaves;                /* gives the number of leaves among `node1` and `node2` */
   int nb_nodes;                  /* gives the number of nodes among `node1` and `node2` */
 } min_nodes;
@@ -30,7 +30,7 @@ typedef struct {
  *       from positions 0 to 99. The remaining cells (from position 100 to 255 are NULL).
  * @return the size of the forest (ie. the number of leaves stored in forest)
  */
-int create_huffman_forest(int occurrences[], huffman_tree * forest[]);
+int create_huffman_forest(int occurrences[], huffman_tree_p forest[]);
 
 
 /**
@@ -41,7 +41,7 @@ int create_huffman_forest(int occurrences[], huffman_tree * forest[]);
  * @param size: the size of the forest (ie. the number of non-NULL cells in forest)
  * @post forest[0]->nb_occurrences >= forest[1]->nb_occurrences >= … >= forest[size-1]->nb_occurrences
  */
-void sort_huffman_forest(huffman_tree *forest[], int size);
+void sort_huffman_forest(huffman_tree_p forest[], int size);
 
 /**
  * Return the two minimal nodes amonth the ones in `leaves` and `nodes`
@@ -56,8 +56,8 @@ void sort_huffman_forest(huffman_tree *forest[], int size);
  *        The first node is the one with the minimal number of occurrences.
  * @param nb_nodes: The number of nodes in `nodes` that have not already been used.
  */
-min_nodes get_min_nodes(huffman_tree *leaves[], int nb_leaves,
-                        huffman_tree *nodes[], int pos_nodes, int nb_nodes); 
+min_nodes get_min_nodes(huffman_tree_p leaves[], int nb_leaves,
+                        huffman_tree_p nodes[], int pos_nodes, int nb_nodes); 
 
 /**
  * Creates a Huffman tree from the forest given in parameter.
@@ -67,7 +67,7 @@ min_nodes get_min_nodes(huffman_tree *leaves[], int nb_leaves,
  * @param size: number of leaves in the array `leaves`
  * @return A final Huffman tree, resulting from the Huffman algorithm.
  */
-huffman_tree *build_huffman_tree(huffman_tree *leaves[], int size);
+huffman_tree_p build_huffman_tree(huffman_tree_p leaves[], int size);
 
 /**
  * Get the Huffman code associated to each symbol
@@ -78,7 +78,7 @@ huffman_tree *build_huffman_tree(huffman_tree *leaves[], int size);
  * @pre The array `codes` must be created and have at least ALPHABET_SIZE cells, 
  * with an initialised `bitarray256_t*` in each cell.
  */
-void create_huffman_coding(huffman_tree *tree, bitarray256_t *codes[]);
+void create_huffman_coding(huffman_tree_p tree, bitarray256_t *codes[]);
 
 /**
  * Write the occurrences in the specified file
@@ -124,7 +124,7 @@ void code_file(FILE *input, FILE *output, bitarray256_t *codes[]);
  * @param size: number of symbols to be decompressed
  * @pre The cursor in the input file is at the beginning of the compressed data.
  */
-void huffman_decode_file(FILE *input, FILE *output, huffman_tree *tree, int size);
+void huffman_decode_file(FILE *input, FILE *output, huffman_tree_p tree, int size);
 
 /**
  * Huffman code an input file in an output file

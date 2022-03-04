@@ -4,24 +4,24 @@
 #include "bitarray.h"
 #include "entropy.h"
 
-int create_huffman_forest(int occurrences[], huffman_tree * forest[]) {
+int create_huffman_forest(int occurrences[], huffman_tree_p  forest[]) {
   /* À COMPLÉTER */
 }
 
 int __compare_htrees(const void *ptree1, const void *ptree2) {
-  huffman_tree *tree1 = *((huffman_tree **)ptree1);
-  huffman_tree *tree2 = *((huffman_tree **)ptree2);
+  huffman_tree_p tree1 = *((huffman_tree_p *)ptree1);
+  huffman_tree_p tree2 = *((huffman_tree_p *)ptree2);
   return compare_huffman_trees(tree1, tree2);
 }
 
-void sort_huffman_forest(huffman_tree *forest[], int size) {
-  qsort(forest, size, sizeof(huffman_tree *), __compare_htrees);
+void sort_huffman_forest(huffman_tree_p forest[], int size) {
+  qsort(forest, size, sizeof(huffman_tree_p ), __compare_htrees);
 }
 
-min_nodes get_min_nodes(huffman_tree *leaves[], int nb_leaves,
-                        huffman_tree *nodes[], int pos_nodes, int nb_nodes) {
+min_nodes get_min_nodes(huffman_tree_p leaves[], int nb_leaves,
+                        huffman_tree_p nodes[], int pos_nodes, int nb_nodes) {
   min_nodes min;
-  huffman_tree *least_nodes[2];
+  huffman_tree_p least_nodes[2];
   min.nb_leaves = 0;
   min.nb_nodes = 0;
   
@@ -50,8 +50,8 @@ min_nodes get_min_nodes(huffman_tree *leaves[], int nb_leaves,
   return min;
 }
 
-huffman_tree *build_huffman_tree(huffman_tree *leaves[], int size) {
-  huffman_tree *nodes[ALPHABET_SIZE]; /* Implements the queue of the nodes
+huffman_tree_p build_huffman_tree(huffman_tree_p leaves[], int size) {
+  huffman_tree_p nodes[ALPHABET_SIZE]; /* Implements the queue of the nodes
                                          built during the Huffman algorithm. */
   int nb_nodes = 0;             /* Number of nodes in the queue */
   int start_nodes = 0;          /* Starting position of the queue in `nodes` */
@@ -61,7 +61,7 @@ huffman_tree *build_huffman_tree(huffman_tree *leaves[], int size) {
   return NULL;
 }
 
-void _create_huffman_coding(huffman_tree *tree, bitarray256_t *codes[], bitarray256_t *bits) {
+void _create_huffman_coding(huffman_tree_p tree, bitarray256_t *codes[], bitarray256_t *bits) {
   if (is_huffman_leaf(tree)) {
     copy_bitarray(bits, codes[tree->symbol]);
     return;
@@ -82,7 +82,7 @@ void _create_huffman_coding(huffman_tree *tree, bitarray256_t *codes[], bitarray
   delete_bitarray(right);
 }
 
-void create_huffman_coding(huffman_tree *tree, bitarray256_t *codes[]) {
+void create_huffman_coding(huffman_tree_p tree, bitarray256_t *codes[]) {
   bitarray256_t *bits = init_bitarray();
   _create_huffman_coding(tree, codes, bits);
   delete_bitarray(bits);
@@ -153,7 +153,7 @@ void code_file(FILE *input, FILE *output, bitarray256_t *codes[]) {
 void huffman_coding(char *in_filename, char *out_filename, int verbose) {
   int i;
   int counts[ALPHABET_SIZE];
-  huffman_tree *forest[ALPHABET_SIZE];
+  huffman_tree_p forest[ALPHABET_SIZE];
   bitarray256_t *codes[ALPHABET_SIZE];
   FILE *input = fopen(in_filename, "r");
   FILE *output = fopen(out_filename, "w");

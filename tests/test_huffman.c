@@ -42,7 +42,7 @@ static int test_huffman_occurrences_storage() {
 static int test_huffman_coding_test1() {
   FILE *input = fopen("test1", "r");
   int counts[ALPHABET_SIZE];
-  huffman_tree *forest[ALPHABET_SIZE];
+  huffman_tree_p forest[ALPHABET_SIZE];
   bitarray256_t *codes[ALPHABET_SIZE];
   int i;
   for (i = 0; i < ALPHABET_SIZE; i++) {
@@ -57,7 +57,7 @@ static int test_huffman_coding_test1() {
   int nb_leaves = create_huffman_forest(counts, forest);
   sort_huffman_forest(forest, nb_leaves);
   
-  huffman_tree *huffman = build_huffman_tree(forest, nb_leaves);
+  huffman_tree_p huffman = build_huffman_tree(forest, nb_leaves);
 
   create_huffman_coding(huffman, codes);
 

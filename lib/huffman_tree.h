@@ -7,19 +7,20 @@
 #define STR_HELPER(x) #x
 #define STR(x) STR_HELPER(x)
 
+typedef struct huffman_tree_s *huffman_tree_p;
+
 /**
  * Representation of a Huffman tree
  */
-typedef struct huffman_tree_s {
-  /** `left` and `right` are respectively the left and right subtrees of the tree.
-   * NULL if there is no such subtree. */
-  struct huffman_tree_s *left, *right;
+struct huffman_tree_s {
+  /** `left` and `right` are respectively the left and right subtrees of the tree. */
+  huffman_tree_p left, right;
   /** The number of occurrences of the symbol (in a leaf) or the cumulative number
    * of occurrences of the symbols in the subtree */
   int nb_occurrences;
   /** The symbol (only in a leaf) */
   unsigned char symbol;
-} huffman_tree;
+};
 
 
 /**
@@ -27,7 +28,7 @@ typedef struct huffman_tree_s {
  * 
  * @post isHuffmanLeaf() on the returned tree will correspond to True.
  */
-huffman_tree *create_empty_huffman_tree();
+huffman_tree_p create_empty_huffman_tree();
 
 /**
  * Creates an Huffman Tree (actually a leaf) for the specified character
@@ -37,7 +38,7 @@ huffman_tree *create_empty_huffman_tree();
  * and the attributes `symbol` and `nb_occurrences` are respectively set
  * to `c` and `count`.
  */
-huffman_tree *create_huffman_tree(char c, int count);
+huffman_tree_p create_huffman_tree(char c, int count);
 
 /**
  * Deletes the Huffman Tree given in parameter and all its subtrees
@@ -46,15 +47,68 @@ huffman_tree *create_huffman_tree(char c, int count);
  * `create_huffman_tree` must be deleted with this function when the
  * tree is not used anymore.
  */
-void delete_huffman_tree(huffman_tree *);
+void delete_huffman_tree(huffman_tree_p);
+
+/**
+ * Predicate that tells if the Huffman tree in parameter is empty.
+ * 
+ * @return a value evaluated to true if the tree in parameter is empty
+ */
+int is_empty_huffman_tree(huffman_tree_p);
 
 /**
  * Predicate that tells if the Huffman tree in parameter is a leaf.
  * 
  * @return a value evaluated to true if the tree in parameter is restricted to
- * a leaf (ie. `tree->left` and `tree->right` are NULL).
+ * a leaf (ie. `left_huffman_tree(tree)` and `right_huffman_tree(tree)` are empty).
  */
-int is_huffman_leaf(huffman_tree *tree);
+int is_huffman_leaf(huffman_tree_p tree);
+
+/**
+ * @return the left subtree of the tree in parameter
+ * @pre ! is_empty_huffman_tree (tree)
+ */
+huffman_tree_p left_huffman_tree(huffman_tree_p tree);
+
+/**
+ * @return the left subtree of the tree in parameter
+ * @pre ! is_empty_huffman_tree (tree)
+ */
+huffman_tree_p right_huffman_tree(huffman_tree_p);
+
+/**
+ * @return the count of the node in parameter
+ * @pre ! is_empty_huffman_tree (tree)
+ */
+int get_count(huffman_tree_p tree);
+
+/**
+ * @return the symbol of the node in parameter
+ * @pre ! is_empty_huffman_tree (tree)
+ */
+unsigned char get_symbol(huffman_tree_p tree);
+
+/**
+ * Sets the count of the node in parameter
+ * @pre ! is_empty_huffman_tree (tree)
+ */
+void set_count(huffman_tree_p tree, int count);
+
+/**
+ * Sets the left subtree of `tree`
+ */
+void set_left_huffman_subtree(huffman_tree_p tree, huffman_tree_p left);
+
+/**
+ * Sets the right subtree of `tree`
+ */
+void set_right_huffman_subtree(huffman_tree_p tree, huffman_tree_p right);
+
+/**
+ * Sets the symbol of the node in parameter
+ * @pre ! is_empty_huffman_tree (tree)
+ */
+void set_symbol(huffman_tree_p tree, unsigned char symbol);
 
 /**
  * Compare two Huffman trees by the number of occurrences they represent.
@@ -62,15 +116,13 @@ int is_huffman_leaf(huffman_tree *tree);
  * @return -1 if tree1 has more occurrences than tree2, 1, in the opposite case
  * and 0 if occurrences from both trees are equal
  */
-int compare_huffman_trees(huffman_tree *tree1, huffman_tree *tree2);
+int compare_huffman_trees(huffman_tree_p tree1, huffman_tree_p tree2);
 
 /**
  * Prints a Huffman tree
  */
-void print_huffman_tree(huffman_tree *tree);
+void print_huffman_tree(huffman_tree_p tree);
 
-/* void setHuffmanLeftTree(huffman_tree *tree, huffman_tree *left); */
-/* void setHuffmanLeftTree(huffman_tree *tree, huffman_tree *right); */
 
-/* void setHuffmanCount(huffman_tree *tree, int count); */
+
 #endif
