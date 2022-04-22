@@ -55,6 +55,7 @@ void sort_huffman_forest(huffman_tree_p forest[], int size);
  * @param pos_nodes: The position of the first node in `nodes` not already used.
  *        The first node is the one with the minimal number of occurrences.
  * @param nb_nodes: The number of nodes in `nodes` that have not already been used.
+ * @return A structure containing the two minimal nodes among the leaves from `leaves` and the internal nodes from `nodes`. See above the documentation of the structure `min_nodes`.
  */
 min_nodes get_min_nodes(huffman_tree_p leaves[], int nb_leaves,
                         huffman_tree_p nodes[], int pos_nodes, int nb_nodes); 
