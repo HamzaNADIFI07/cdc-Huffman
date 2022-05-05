@@ -22,7 +22,7 @@ typedef struct {
  * Creates a Huffman forest from a table of symbol occurrences
  *
  * @param occurrences: occurrences of each symbol (the array is of size ALPHABET_SIZE)
- * @param forest: a table of `HuffmanTree *`
+ * @param forest: a table of Huffman trees (huffman_tree_p)
  * @pre  `forest` has at least ALPHABET_SIZE cells, each initialized to NULL
  * @post The table `forest` contains a Huffman leaf for each symbol that is counted
  *       at least once in the table `occurrences`. In `forest` all the entries are consecutive.
