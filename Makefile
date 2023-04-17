@@ -21,7 +21,7 @@ clean:
 	rm -f $(OBJ) $(MAIN) $(MAIN_OBJ)
 cleanall: clean
 	rm -rf doc/
-doc: $(SRC)
+doc: $(ARCHIVE_FILES)
 	doxygen .doxyfile
 archive: tp-$(TP).zip
 tp-$(TP).zip: $(ARCHIVE_FILES)

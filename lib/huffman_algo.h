@@ -9,13 +9,26 @@
 #include "huffman_tree.h"
 
 /**
- * A structure used for the Huffman algorithm
+ * A structure used for the Huffman algorithm that stores the two minimal nodes among
+ * several leaves and internal nodes.
  */
 typedef struct {
-  huffman_tree_p node1;          /* `node1` and `node2` are two nodes with */
-  huffman_tree_p node2;          /* the minimal number of occurrences */
-  int nb_leaves;                /* gives the number of leaves among `node1` and `node2` */
-  int nb_nodes;                  /* gives the number of nodes among `node1` and `node2` */
+  /**
+   * The node with the minimal number of occurrences among the leaves and nodes.
+   */
+  huffman_tree_p node1;
+  /**
+   * The node with the second minimal number of occurrences among the leaves and nodes.
+   */
+  huffman_tree_p node2;
+  /**
+   * The number of leaves among `node1` and `node2`.
+   */
+  int nb_leaves;
+  /**
+   * The number of internal nodes among `node1` and `node2`.
+   */
+  int nb_nodes;
 } min_nodes;
 
 /**
@@ -44,7 +57,7 @@ int create_huffman_forest(int occurrences[], huffman_tree_p forest[]);
 void sort_huffman_forest(huffman_tree_p forest[], int size);
 
 /**
- * Return the two minimal nodes amonth the ones in `leaves` and `nodes`
+ * Return the two minimal nodes among the ones in `leaves` and `nodes`
  *
  * @param leaves: An array of ALPHABET_SIZE cells storing leaves in descending order of their 
  *        number of occurrences.
@@ -55,7 +68,7 @@ void sort_huffman_forest(huffman_tree_p forest[], int size);
  * @param pos_nodes: The position of the first node in `nodes` not already used.
  *        The first node is the one with the minimal number of occurrences.
  * @param nb_nodes: The number of nodes in `nodes` that have not already been used.
- * @return A structure containing the two minimal nodes among the leaves from `leaves` and the internal nodes from `nodes`. See above the documentation of the structure `min_nodes`.
+ * @return A structure containing the two minimal nodes among the leaves from `leaves` and the internal nodes from `nodes`. See the documentation of the structure `min_nodes`.
  */
 min_nodes get_min_nodes(huffman_tree_p leaves[], int nb_leaves,
                         huffman_tree_p nodes[], int pos_nodes, int nb_nodes); 
