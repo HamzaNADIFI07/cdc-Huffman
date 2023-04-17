@@ -40,7 +40,7 @@ typedef struct {
  * @post The table `forest` contains a Huffman leaf for each symbol that is counted
  *       at least once in the table `occurrences`. In `forest` all the entries are consecutive.
  *       If there are 100 huffman leaves stored in `forest` their positions range
- *       from positions 0 to 99. The remaining cells (from position 100 to 255 are NULL).
+ *       from positions 0 to 99. The remaining cells (from position 100 to 255) are NULL.
  * @return the size of the forest (ie. the number of leaves stored in forest)
  */
 int create_huffman_forest(int occurrences[], huffman_tree_p forest[]);
@@ -125,7 +125,7 @@ void read_occurrences(FILE *input, int counts[]);
  * @param output: output file, opened in write mode
  * @param codes: An array of (at least) ALPHABET_SIZE cells corresponding
  * to the code of each symbol (as produced by `create_huffman_coding()` 
- * for instance.
+ * for instance).
  */
 void code_file(FILE *input, FILE *output, bitarray256_t *codes[]);
 
@@ -136,7 +136,7 @@ void code_file(FILE *input, FILE *output, bitarray256_t *codes[]);
  * @param output: output file, opened in write mode
  * @param tree: Huffman Tree of the Huffman coding used to compress the input file
  * @param size: number of symbols to be decompressed
- * @pre The cursor in the input file is at the beginning of the compressed data.
+ * @pre The cursor in the input file is at the beginning of the compressed data (ie. the header that contains the number of occurrences of each symbol has already been read: `read_occurrences` has already been called on that input file).
  */
 void huffman_decode_file(FILE *input, FILE *output, huffman_tree_p tree, int size);
 
