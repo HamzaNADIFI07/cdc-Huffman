@@ -55,9 +55,20 @@ static int test_huffman_coding_test1() {
   fclose(input);
 
   int nb_leaves = create_huffman_forest(counts, forest);
+  mu_assert_eq("Number of leaves in Huffman forest", nb_leaves, 3);
+  for (i = 0; i < nb_leaves; i++)
+    mu_assert("Leaf defined in Huffman forest", forest[i]!=NULL);
+  for (i = nb_leaves; i < ALPHABET_SIZE; i++)
+    mu_assert("Cell should be empty after create_huffman_forest", forest[i] == NULL);
+    
   sort_huffman_forest(forest, nb_leaves);
   
   huffman_tree_p huffman = build_huffman_tree(forest, nb_leaves);
+  mu_assert("Huffman tree should not be NULL", huffman != NULL);
+  mu_assert_eq("Nine symbols in test1", get_count(huffman), 9);
+  mu_assert("a must either be at the root of the left or of the right subtree",
+            get_symbol(left_huffman_tree(huffman)) == 'a' ||
+            get_symbol(right_huffman_tree(huffman)) == 'a');
 
   create_huffman_coding(huffman, codes);
 

@@ -51,8 +51,8 @@ min_nodes get_min_nodes(huffman_tree_p leaves[], int nb_leaves,
 }
 
 huffman_tree_p build_huffman_tree(huffman_tree_p leaves[], int size) {
-  huffman_tree_p nodes[ALPHABET_SIZE]; /* Implements the queue of the nodes
-                                         built during the Huffman algorithm. */
+  huffman_tree_p nodes[ALPHABET_SIZE] = {NULL}; /* Implements the queue of the nodes
+                                                   built during the Huffman algorithm. */
   int nb_nodes = 0;             /* Number of nodes in the queue */
   int start_nodes = 0;          /* Starting position of the queue in `nodes` */
   int nb_leaves = size;

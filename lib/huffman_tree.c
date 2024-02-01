@@ -91,5 +91,7 @@ int _print_ht(huffman_tree_p tree, int depth) {
 }
 
 void print_huffman_tree(huffman_tree_p tree) {
+  if (! tree)
+    printf("NULL\n");
   _print_ht(tree, 0);
 }
