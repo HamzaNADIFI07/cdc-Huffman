@@ -1,8 +1,0 @@
-*.o
-*.gch
-*.zip
-tests/test_[a-z_]*
-doc/
-huffman
-main
-*.huf
