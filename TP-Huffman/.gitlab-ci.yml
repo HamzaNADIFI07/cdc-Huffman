@@ -10,7 +10,6 @@ check_authors:
     - |
         test -s AUTHORS || (echo "ERREUR: Vous devez renseigner vos noms et prénoms dans le fichier AUTHORS"; exit 1)
 
-
     
 build:
   stage: build
