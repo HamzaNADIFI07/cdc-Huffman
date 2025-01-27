@@ -26,7 +26,7 @@ struct huffman_tree_s {
 /**
  * Creates an empty Huffman Tree, with 0 occurrence.
  * 
- * @post isHuffmanLeaf() on the returned tree will correspond to True.
+ * @post is_huffman_leaf() on the returned tree will correspond to True.
  */
 huffman_tree_p create_empty_huffman_tree();
 
@@ -34,7 +34,7 @@ huffman_tree_p create_empty_huffman_tree();
  * Creates an Huffman Tree (actually a leaf) for the specified character
  * with the specified count (the number of occurrences of this character).
  * 
- * @post isHuffmanLeaf() on the returned tree will correspond to True
+ * @post is_huffman_leaf() on the returned tree will correspond to True
  * and the attributes `symbol` and `nb_occurrences` are respectively set
  * to `c` and `count`.
  */
