@@ -6,6 +6,16 @@
 
 int create_huffman_forest(int occurrences[], huffman_tree_p  forest[]) {
   /* À COMPLÉTER */
+  int size = 0;
+  int i;
+  for(i = 0; i < ALPHABET_SIZE; i++){
+    if(occurrences[i] > 0){
+      forest[size] = create_huffman_tree(i,occurrences[i]);
+      size++;
+    }
+  }
+  return size;
+
 }
 
 int __compare_htrees(const void *ptree1, const void *ptree2) {
