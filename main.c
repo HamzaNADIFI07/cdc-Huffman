@@ -40,11 +40,10 @@ int main(int argc, char **argv) {
     printf("[%d, %d] ", forest[i]->nb_occurrences, forest[i]->symbol);
   printf("\n");
 
-  /*
   huffman_tree_p huffman = build_huffman_tree(forest, nb_leaves);
   printf("\n");
   print_huffman_tree(huffman);
-  */
+  
 
   exit(0);
 }

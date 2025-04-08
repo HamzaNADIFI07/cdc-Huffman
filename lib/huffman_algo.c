@@ -67,8 +67,22 @@ huffman_tree_p build_huffman_tree(huffman_tree_p leaves[], int size) {
   int start_nodes = 0;          /* Starting position of the queue in `nodes` */
   int nb_leaves = size;
 
-  /* À COMPLÉTER ET MODIFIER */
-  return NULL;
+  while ((nb_leaves + nb_nodes - start_nodes) > 1) {
+    min_nodes minimumNodes = get_min_nodes(leaves, nb_leaves, nodes, start_nodes, nb_nodes);
+
+    huffman_tree_p tree = create_empty_huffman_tree();
+    tree->left = minimumNodes.node1;
+    tree->right = minimumNodes.node2;
+    tree->nb_occurrences = tree->left->nb_occurrences + tree->right->nb_occurrences;
+    tree->symbol = tree->left->nb_occurrences + tree->right->nb_occurrences;
+
+    nb_leaves -= minimumNodes.nb_leaves;
+    start_nodes += minimumNodes.nb_nodes;
+    nodes[nb_nodes++] = tree;
+  }
+
+  return nodes[nb_nodes - 1];
+
 }
 
 void _create_huffman_coding(huffman_tree_p tree, bitarray256_t *codes[], bitarray256_t *bits) {
@@ -176,6 +190,29 @@ void huffman_coding(char *in_filename, char *out_filename, int verbose) {
   /* Initialiser les tableaux counts, forest et codes.
    * Initialiser chaque case du tableau codes avec un 
    * bitarray vide (voir fonction `init_bitarray`) */
+  /* Initialisation des tableaux */
+  for (int i = 0; i < ALPHABET_SIZE; i++) {
+    counts[i] = 0;
+    forest[i] = NULL;
+    codes[i] = init_bitarray();
+  }
+
+  count_occurrences(input, counts);
+    
+  /* Construction de l'arbre de Huffman */
+  int forest_size = create_huffman_forest(counts, forest);
+  sort_huffman_forest(forest, forest_size);
+  huffman_tree_p huffman_tree = build_huffman_tree(forest, forest_size);
+
+  /* Création du codage de chaque symbole*/
+  create_huffman_coding(huffman_tree, codes);
+
+  count_occurrences(input, counts);
+
+  write_occurrences(counts, output);
+
+  code_file(input, output, codes);
+
   fclose(input);
   fclose(output);
 }
