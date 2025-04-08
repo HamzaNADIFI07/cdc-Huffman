@@ -207,7 +207,6 @@ void huffman_coding(char *in_filename, char *out_filename, int verbose) {
   /* Création du codage de chaque symbole*/
   create_huffman_coding(huffman_tree, codes);
 
-  count_occurrences(input, counts);
 
   write_occurrences(counts, output);
 
