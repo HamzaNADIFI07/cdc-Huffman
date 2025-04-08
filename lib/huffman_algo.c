@@ -216,3 +216,67 @@ void huffman_coding(char *in_filename, char *out_filename, int verbose) {
   fclose(output);
 }
 
+void huffman_decode_file(FILE *input, FILE *output, huffman_tree_p tree, int size){
+  bitarray256_t *codes[ALPHABET_SIZE];
+  int counts[ALPHABET_SIZE];
+
+  int i,k;
+  for(i = 0; i<ALPHABET_SIZE; i++){
+    codes[i] = init_bitarray();
+    counts[i] = 0;
+
+  }
+
+  create_huffman_coding(tree,codes);
+  read_occurrences(input,counts);
+
+  fseek(input,0,SEEK_SET);
+
+  int begi = 4 + (5 + size);
+  int s = 0;
+  int sizeOfArray = 0;
+  int nombreBits = 0;
+
+  for(i = 0; i < ALPHABET_SIZE; i++){
+    if(codes[i] -> size > 0){
+      nombreBits += counts[i]*codes[i] -> size;
+    }
+  }
+
+  while((k = fgetc(input)) != EOF){
+    if( s >= begi){
+      sizeOfArray += 8;
+    }
+    s++;
+  }
+
+  int bitarray[sizeOfArray];
+  s = 0;
+  fseek(input, 0, SEEK_SET);
+
+  int indice = 0;
+  while((k = fgetc(input) != EOF)){
+    if(s >= begi){
+      toBitArray((int)k,bitarray,indice);
+      indice += 8;
+    }
+    s++;
+  }
+
+  huffman_tree_p tr;
+  tr = tree;
+  for(int i = 0; i < sizeOfArray; i++){
+    if(tr -> left == NULL && tr -> right == NULL){
+      fputc(tr -> symbol, output);
+      tr = tree;
+    }
+    if(bitarray[i] == 0){
+      tr = tr -> left;
+    }
+    else{
+      tr = tr -> right;
+    }
+  }
+
+}
+
