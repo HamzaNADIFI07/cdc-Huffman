@@ -157,4 +157,14 @@ void huffman_coding(char *in_filename, char *out_filename, int verbose);
  * @param verbose: if set to a value corresponding to true, will print the Huffman tree
  */
 void huffman_decoding(char *in_filename, char *out_filename, int verbose);
+
+/**
+ * @param num L'entier à convertir en tableau de bits.
+ * @param bitarray Le tableau dans lequel stocker les bits.
+ * @param index L'indice à partir duquel commencer à stocker les bits dans le tableau.
+ * 
+*/
+
+void toBitArray(int num, int *bitarray, int index);
+
 #endif

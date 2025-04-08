@@ -104,3 +104,57 @@ J'ai eu comme résultat:
 (13)
         [6, 97]
 ```
+### Q1.11:
+Après avoir implémenter la fonction `huffman_decoding`, et en testant avec les commandes suivantes:
+
+```bash
+./huffman -c tests/test1 test1.huff # comprésser le fichier tests/test1
+./huffman -d test1.huff test1.out # comprésser le fichier test1.huff
+diff tests/test1 test1.out # comparer les bits du fichier test1.out avec les bits du fichier original tests/test1
+```
+J'ai eu comme résultat:
+
+```bash
+1d0
+< caaccabaa
+\ No newline at end of file
+```
+Ce qui veux dire que le fichier `test1.huff` a été décompresser avec succès.
+
+## Expériences
+
+Après avoir repris les fichiers du **TP entropie** pour lesquels nous avions calculé l’entropie et en appliquant leur la compression avec l’algorithme de Huffman.
+
+Pour executer le programme de compression des fichiers stockés dans le dossier `inputs/fichiers_exp`, il faudra se positionner dans le dossier inputs, et executer les commandes suivantes:
+
+```bash
+make # Pour compresser et décompresser les fichiers
+make compare_size # Pour afficher les tailles des differents fichiers
+make clean # Pour supprimer les fichiers compressés et décompressés
+```
+En ce qui concerne les tailles des fichiers, j'ai eu comme résultat:
+
+```bash
+
+--- Comparaison des tailles (original vs compressé) ---
+4208640 fichiers_exp/archive_tar.tar
+2606675 encode/archive_tar.huf
+170358 fichiers_exp/archive_zip.zip
+171613 encode/archive_zip.huf
+28070 fichiers_exp/archive_zip2.zip
+29252 encode/archive_zip2.huf
+7375183 fichiers_exp/image1.jpg
+7371783 encode/image1.huf
+5846 fichiers_exp/image2.png
+6823 encode/image2.huf
+33253334 fichiers_exp/image3.bmp
+30714114 encode/image3.huf
+136121 fichiers_exp/audio1.mp3
+136975 encode/audio1.huf
+387342 fichiers_exp/audio2.ogg
+387642 encode/audio2.huf
+1076188 fichiers_exp/audio3.wav
+931537 encode/audio3.huf
+```
+
+Ce qui ne correspond pas à ce qui était attendu car l'entropie donne une limite théorique du taux de compression, dans le cas idéal où chaque symbole est codé selon sa probabilité exacte.

@@ -198,7 +198,7 @@ void huffman_coding(char *in_filename, char *out_filename, int verbose) {
   }
 
   count_occurrences(input, counts);
-    
+  rewind(input);
   /* Construction de l'arbre de Huffman */
   int forest_size = create_huffman_forest(counts, forest);
   sort_huffman_forest(forest, forest_size);
@@ -262,7 +262,6 @@ void huffman_decode_file(FILE *input, FILE *output, huffman_tree_p tree, int siz
     }
     s++;
   }
-
   huffman_tree_p tr;
   tr = tree;
   for(int i = 0; i < sizeOfArray; i++){
@@ -279,4 +278,57 @@ void huffman_decode_file(FILE *input, FILE *output, huffman_tree_p tree, int siz
   }
 
 }
+
+void toBitArray(int num, int *bitarray, int index) {
+  for (int i = 7; i >= 0; i--) {
+    bitarray[index + i] = (num >> (7 - i)) & 1;
+  }
+}
+
+void huffman_decoding(char *in_filename, char *out_filename, int verbose) {
+    FILE *input = fopen(in_filename, "rb");
+    FILE *output = fopen(out_filename, "w");
+
+    if (!input || !output) {
+        perror("Cannot open files");
+        exit(1);
+    }
+
+    int counts[ALPHABET_SIZE];
+    huffman_tree_p forest[ALPHABET_SIZE];
+
+    for (int i = 0; i < ALPHABET_SIZE; i++) {
+        counts[i] = 0;
+        forest[i] = NULL;
+    }
+
+    read_occurrences(input, counts);
+
+    int nb_leaves = create_huffman_forest(counts, forest);
+    sort_huffman_forest(forest, nb_leaves);
+    huffman_tree_p tree = build_huffman_tree(forest, nb_leaves);
+
+    if (verbose) {
+        print_huffman_tree(tree);
+    }
+
+    huffman_tree_p current = tree;
+    int c;
+
+    while ((c = fgetc(input)) != EOF) {
+        for (int i = 7; i >= 0; i--) {
+            int bit = (c >> i) & 1;
+            current = (bit == 0) ? current->left : current->right;
+
+            if (is_huffman_leaf(current)) {
+                fputc(current->symbol, output);
+                current = tree;
+            }
+        }
+    }
+
+    fclose(input);
+    fclose(output);
+}
+
 

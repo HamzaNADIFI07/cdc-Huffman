@@ -13,9 +13,9 @@ int main(int argc, char **argv) {
   if (strcmp(argv[1], "-c") == 0) {
     huffman_coding(argv[2], argv[3], 0);
   } else if (strcmp(argv[1], "-d") == 0) {
-    /*
+    
     huffman_decoding(argv[2], argv[3], 0);
-    */
+    
   }
   exit(0);
 }

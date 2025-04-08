@@ -84,7 +84,7 @@ static int test_huffman_coding_test1() {
   return 0;
 }
 
-/*
+
 static int test_huffman_coding_decoding(char * file) {
   char tempout[] = "tmp.XXXXXX";
   char tempin[] = "tmp.XXXXXX";
@@ -133,16 +133,15 @@ static int test_huffman_coding_decoding_file2() {
 static int test_huffman_coding_decoding_huffman() {
   return test_huffman_coding_decoding("test_huffman.c");
 }
-*/
+
 
 static int all_tests() {
    mu_run_test(test_huffman_occurrences_storage);
    mu_run_test(test_huffman_coding_test1);
-   /*
+
    mu_run_test(test_huffman_coding_decoding_file1);
    mu_run_test(test_huffman_coding_decoding_file2);
    mu_run_test(test_huffman_coding_decoding_huffman);
-   */
    return mu_tests_success;
 }
  
